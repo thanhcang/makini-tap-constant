@@ -10,7 +10,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "tap-rest-constant = tap_rest_constant:main",  # Entry point for the Tap
+            "meltano-tap-constant = meltano-tap-constant:main",  # Entry point for the Tap
         ],
     },
     classifiers=[
