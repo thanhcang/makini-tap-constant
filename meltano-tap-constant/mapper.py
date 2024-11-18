@@ -21,7 +21,7 @@ class TapRestConstant(Mapper):
             th.Property(
                 "name", 
                 th.StringType, 
-                required=True, 
+                required=False, 
                 description="Name of the entity"
             ),
             th.Property(
@@ -30,7 +30,7 @@ class TapRestConstant(Mapper):
                     "code": th.StringType,
                     "name": th.StringType
                 })), 
-                required=True, 
+                required=False, 
                 description="List of data"
             ),
         ]
