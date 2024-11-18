@@ -21,22 +21,34 @@ class ConstantStream(Stream):
         """Yields records for the stream."""
         for stream in self.constant_data:
             stream_name = stream["name"]  # Use the 'name' field as the stream name
+            
+            schema = {
+                "properties": {
+                    "name": {"type": ["string", "null"]},
+                    "code": {"type": ["string", "null"]}
+                }
+            }
+            
+            yield {
+                "type": "SCHEMA",
+                "stream": stream_name,
+                "schema": schema,
+                "key_properties": []
+            }
+            
             for status in stream["data"]:
-                # Create a record for each entry in the 'data' array
                 record = {
                     "name": status,
                     "code": status
                 }
-                # Log the record being yielded
                 self.logger.info(f"Yielding record for stream '{stream_name}': {record}")
-                
-                # Yield the record following the Singer format
                 yield {
                     "type": "RECORD",
                     "stream": stream_name,
                     "record": record,
                     "time_extracted": utc_now()
                 }
+
 class TapConstant(Tap):
     """A tap to handle constant data."""
     name = "meltano-tap-constant"
