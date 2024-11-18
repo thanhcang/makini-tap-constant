@@ -1,8 +1,8 @@
+import json
+import os
 from singer_sdk import Tap
 from singer_sdk import typing as th
 from singer_sdk.helpers._util import utc_now
-import json
-import os
 
 class TapRestConstant(Tap):
     """A tap to handle constant data."""
@@ -33,7 +33,10 @@ class TapRestConstant(Tap):
             ),
             th.Property(
                 "data", 
-                th.ArrayType(th.StringType), 
+                th.ArrayType(th.ObjectType({
+                    "code": th.StringType,
+                    "name": th.StringType
+                })), 
                 required=True, 
                 description="List of data"
             ),
@@ -42,13 +45,16 @@ class TapRestConstant(Tap):
     def sync(self):
         """Sync the streams and store constant data."""
         for stream in self.constant_data:
+            # Log that we're processing this stream
+            self.logger.info(f"Syncing stream: {stream['name']}")
+            
             # Creating record per stream
             record = {
                 "name": stream["name"],
                 "data": [{"code": status, "name": status} for status in stream["data"]]
             }
 
-            # Yield the record, and insert it into the database or any other action
+            # Yield the record (this is the standard behavior for a tap)
             yield {
                 "stream": stream["name"],
                 "record": record,
@@ -60,6 +66,7 @@ class TapRestConstant(Tap):
         """Load stream data from the environment variable TAP_REST_API_CONSTANT_STREAMS."""
         stream_data = os.getenv("TAP_REST_API_CONSTANT_STREAMS", "[]")
         try:
+            self.logger.info("Loading stream data from environment variable.")
             return json.loads(stream_data)
         except json.JSONDecodeError as e:
             self.logger.error(f"Failed to load stream data from environment. Error: {e}")
