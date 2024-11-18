@@ -1,0 +1,19 @@
+version: 1
+send_anonymous_usage_stats: true
+plugins:
+  extractors:
+    - name: tap-makini-constant
+      namespace: tap_makini_constant
+      capabilities:
+        - state
+        - catalog
+        - discover
+        - about
+        - stream-maps
+      settings:
+        - name: data
+          kind: array
+  loaders:
+    - name: target-jsonl
+      variant: andyh1203
+      pip_url: target-jsonl
