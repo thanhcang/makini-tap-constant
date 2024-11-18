@@ -28,7 +28,7 @@ class ConstantStream(Stream):
                     "code": status
                 }
                 self.logger.info(f"Yielding record for {collection_name}: {record}")
-                yield record
+                yield (collection_name, record)
 
 class TapConstant(Tap):
     """A tap to handle constant data."""
