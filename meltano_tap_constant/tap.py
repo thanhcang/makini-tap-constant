@@ -20,6 +20,7 @@ class ConstantStream(Stream):
     def __init__(self, tap, constant_data):
         super().__init__(tap)
         self.constant_data = constant_data
+        self.logger = tap.logger 
 
     def get_records(self, context=None):
         """Yields records for the stream."""
@@ -28,6 +29,7 @@ class ConstantStream(Stream):
                 "name": stream["name"],
                 "data": [{"code": status, "name": status} for status in stream["data"]]
             }
+            self.logger.info(f"Tap makini constant: {record}")
             yield record
 
 class TapRestConstant(Tap):
@@ -51,7 +53,6 @@ class TapRestConstant(Tap):
         return [
             ConstantStream(self, self.constant_data)
         ]
-
+    
 if __name__ == "__main__":
-    tap = TapRestConstant()
-    tap.cli()  # Correct method call
+    TapRestConstant.cli()    
