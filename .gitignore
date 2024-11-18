@@ -2,4 +2,3 @@
 /.meltano
 .env
 __pycache__
-venv
