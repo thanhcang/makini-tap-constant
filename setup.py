@@ -5,7 +5,7 @@ setup(
     version="0.1.0",  # Initial version of your plugin
     packages=find_packages(),  # Automatically discover all packages
     install_requires=[
-        "singer-sdk>=1.0.0",  # Singer SDK is required for Meltano taps
+        "singer-sdk>=0.6.0"  # Singer SDK is required for Meltano taps
         # Add any other dependencies here
     ],
     entry_points={
