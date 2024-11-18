@@ -1,9 +1,8 @@
 [tool.poetry]
 name = "meltano-tap-constant"
-version = "0.1.0"
-description = ""
-authors = ["Vo Thanh Cang <vtcanglt@gmail.com>"]
-readme = "README.md"
+version = "1.0"
+description = "A Singer SDK-based tap for constant data"
+authors = ["CangVo"]
 
 [tool.poetry.dependencies]
 python = ">=3.9"
@@ -13,10 +12,6 @@ version = "~=0.42.0"
 extras = [
   "faker",
 ]
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 meltano-tap-constant = "meltano_tap_constant.tap:TapConstant.cli"
