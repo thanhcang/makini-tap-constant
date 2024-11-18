@@ -34,7 +34,7 @@ class ConstantStream(Stream):
 
 class TapConstant(Tap):
     """A tap to handle constant data."""
-    name = "meltano-tap-constant"
+    name = "makini-tap-constant"
 
     # Define the constant data
     constant_data = [

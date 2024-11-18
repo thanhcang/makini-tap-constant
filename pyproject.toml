@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "meltano-tap-constant"
+name = "makini-tap-constant"
 version = "1.0"
 description = "A Singer SDK-based tap for constant data"
 authors = ["CangVo"]
@@ -14,4 +14,4 @@ extras = [
 ]
 
 [tool.poetry.scripts]
-meltano-tap-constant = "meltano_tap_constant.tap:TapConstant.cli"
+makini-tap-constant = "makini_tap_constant.tap:TapConstant.cli"
