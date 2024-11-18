@@ -1,0 +1,8 @@
+[tool.poetry]
+name="meltano-tap-constant"
+version ="1.0"
+description =""
+authors = ["CangVo"]
+keywords = []
+
+[tool.poetry.dependencies]
