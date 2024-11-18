@@ -32,7 +32,7 @@ class ConstantStream(Stream):
             self.logger.info(f"Tap makini constant: {record}")
             yield record
 
-class TapRestConstant(Tap):
+class TapConstant(Tap):
     """A tap to handle constant data."""
     name = "tap-constant"
 
@@ -55,4 +55,4 @@ class TapRestConstant(Tap):
         ]
     
 if __name__ == "__main__":
-    TapRestConstant.cli()    
+    TapConstant.cli()    
