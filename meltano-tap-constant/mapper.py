@@ -1,11 +1,11 @@
 import json
 import os
-from singer_sdk import Tap
+from singer_sdk import Mapper
 from singer_sdk import typing as th
 from singer_sdk.helpers._util import utc_now
 
-class TapRestConstant(Tap):
-    """A simple tap to return constant data for work orders statuses."""
+class TapRestConstant(Mapper):
+    """A simple mapper to transform constant data for work orders statuses."""
 
     name = "tap-rest-constant"
 
@@ -13,7 +13,7 @@ class TapRestConstant(Tap):
         super().__init__(*args, **kwargs)
         self.stream_maps = self.load_data_from_env()
 
-    # Define the stream schema
+    # Define the stream schema for mapping
     @property
     def stream_schemas(self):
         """Return stream schemas based on the properties."""
@@ -26,45 +26,40 @@ class TapRestConstant(Tap):
             ),
             th.Property(
                 "data", 
-                th.ArrayType(th.StringType), 
+                th.ArrayType(th.ObjectType({
+                    "code": th.StringType,
+                    "name": th.StringType
+                })), 
                 required=True, 
                 description="List of data"
             ),
         ]
     
-    def discover(self):
-        """Discover the streams. This is typically where metadata is discovered."""
-        for stream in self.stream_maps:
-            self.logger.info(f"Discovering stream: {stream['name']}")
-            # Here we return the stream metadata in a way Singer expects
-            yield {
-                "stream": stream["name"],
-                "schema": {
-                    "properties": {property.name: property for property in self.stream_schemas},
-                },
-            }
+    def map(self, record: dict, stream_id: str) -> dict:
+        """Map a record for a given stream."""
+        self.logger.info(f"Mapping stream: {stream_id}")
+        
+        stream = next(filter(lambda x: x['name'] == stream_id, self.stream_maps), None)
+        
+        if stream is None:
+            raise ValueError(f"Stream {stream_id} not found.")
+        
+        # Map the 'data' field into objects with 'code' and 'name'
+        mapped_data = [
+            {"code": status, "name": status} for status in stream['data']
+        ]
 
-    def sync(self):
-        """Sync the streams and produce the records."""
-        for stream in self.stream_maps:
-            self.logger.info(f"Syncing stream: {stream['name']}")
-            # Creating record per stream
-            record = {
+        # Return the mapped record
+        return {
+            "stream": stream["name"],
+            "record": {
                 "name": stream["name"],
-                "data": [
-                    {"code": status, "name": status} for status in stream["data"]
-                ]
-            }
+                "data": mapped_data,
+            },
+            "version": utc_now(),
+            "time_extracted": utc_now(),
+        }
 
-            # Yield the record. You can add custom logic here for other fields.
-            yield {
-                "stream": stream["name"],
-                "record": record,
-                "version": utc_now(),
-                "time_extracted": utc_now(),
-            }
-
-    # Helper method to load data from environment
     def load_data_from_env(self):
         """Load stream data from the environment variable TAP_REST_API_CONSTANT_STREAMS."""
         stream_data = os.getenv("TAP_REST_API_CONSTANT_STREAMS", "[]")
