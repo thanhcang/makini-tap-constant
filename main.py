@@ -1,9 +1,8 @@
-from meltano_tap_constant.tap_rest_constant import  TapRestConstant # Adjust the import path to your script
-from singer_sdk import SingerSink
+from meltano_tap_constant.tap import TapRestConstant  # Adjust the import path to your script
 
 def main():
     tap = TapRestConstant()
-    tap.sync()  # Run the sync method to generate the output
+    tap.cli()  # Correct method to run the tap
 
 if __name__ == "__main__":
     main()

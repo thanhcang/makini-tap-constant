@@ -1,0 +1,168 @@
+Metadata-Version: 2.1
+Name: singer-sdk
+Version: 0.42.1
+Summary: A framework for building Singer taps
+Home-page: https://sdk.meltano.com/en/latest/
+License: Apache-2.0
+Keywords: Meltano,Singer,Meltano SDK,Singer SDK,ELT
+Author: Meltano Team and Contributors
+Author-email: hello@meltano.com
+Maintainer: Meltano Team and Contributors
+Maintainer-email: hello@meltano.com
+Requires-Python: >=3.8
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Typing :: Typed
+Provides-Extra: docs
+Provides-Extra: faker
+Provides-Extra: jwt
+Provides-Extra: parquet
+Provides-Extra: s3
+Provides-Extra: ssh
+Provides-Extra: testing
+Requires-Dist: PyJWT (>=2.4,<3.0) ; extra == "jwt"
+Requires-Dist: PyYAML (>=6.0)
+Requires-Dist: backoff (>=2.0.0) ; python_version < "4"
+Requires-Dist: backports-datetime-fromisoformat (>=2.0.1) ; python_version < "3.11"
+Requires-Dist: click (>=8.0,<9.0)
+Requires-Dist: cryptography (>=3.4.6) ; extra == "jwt"
+Requires-Dist: faker (>=22.5) ; extra == "faker"
+Requires-Dist: fs (>=2.4.16)
+Requires-Dist: fs-s3fs (>=1.1.1) ; extra == "s3"
+Requires-Dist: fsspec (>=2024.9.0)
+Requires-Dist: furo (>=2024.5.6) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: importlib-metadata (<9.0.0) ; python_version < "3.12"
+Requires-Dist: importlib-resources (>=5.12.0,!=6.2.0,!=6.3.0,!=6.3.1) ; python_version < "3.10"
+Requires-Dist: inflection (>=0.5.1)
+Requires-Dist: joblib (>=1.3.0)
+Requires-Dist: jsonpath-ng (>=1.5.3)
+Requires-Dist: jsonschema (>=4.16.0)
+Requires-Dist: myst-parser (>=3) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: numpy (>=1.22) ; (python_version >= "3.10") and (extra == "parquet")
+Requires-Dist: numpy (>=1.22,<1.25) ; (python_version == "3.8") and (extra == "parquet")
+Requires-Dist: numpy (>=1.22,<2.1) ; (python_version == "3.9") and (extra == "parquet")
+Requires-Dist: packaging (>=23.1)
+Requires-Dist: paramiko (>=3.3.0) ; extra == "ssh"
+Requires-Dist: pyarrow (>=13) ; (python_version >= "3.9") and (extra == "parquet")
+Requires-Dist: pyarrow (>=13,<18) ; (python_version == "3.8") and (extra == "parquet")
+Requires-Dist: pytest (>=7.2.1) ; extra == "docs" or extra == "testing"
+Requires-Dist: python-dotenv (>=0.20)
+Requires-Dist: referencing (>=0.30.0)
+Requires-Dist: requests (>=2.25.1)
+Requires-Dist: s3fs (>=2024.9.0) ; extra == "s3"
+Requires-Dist: setuptools (<=70.3.0)
+Requires-Dist: simpleeval (>=0.9.13,!=1.0.1) ; python_version >= "3.9"
+Requires-Dist: simpleeval (>=0.9.13,<1) ; python_version < "3.9"
+Requires-Dist: simplejson (>=3.17.6)
+Requires-Dist: sphinx (>=7) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: sphinx-copybutton (>=0.5.2) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: sphinx-inline-tabs (>=2023.4.21) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: sphinx-notfound-page (>=1.0.0) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: sphinx-reredirects (>=0.1.5) ; (python_version >= "3.9") and (extra == "docs")
+Requires-Dist: sqlalchemy (>=1.4,<3.0)
+Requires-Dist: typing-extensions (>=4.5.0)
+Project-URL: Changelog, https://github.com/meltano/sdk/blob/main/CHANGELOG.md
+Project-URL: Documentation, https://sdk.meltano.com/en/latest/
+Project-URL: Issue Tracker, https://github.com/meltano/sdk/issues
+Project-URL: Repository, https://github.com/meltano/sdk
+Project-URL: Slack, https://meltano.com/slack
+Project-URL: Twitter, https://twitter.com/meltanodata/
+Project-URL: Youtube, https://www.youtube.com/meltano
+Description-Content-Type: text/markdown
+
+<h1 align="center">Meltano Singer SDK</h1>
+
+<h3 align="center">
+The Tap and Target SDKs are the fastest way to build custom data extractors and loaders!
+Taps and targets built on the SDK are automatically compliant with the
+<a href="https://hub.meltano.com/singer/spec">Singer Spec</a>, the
+de-facto open source standard for extract and load pipelines.
+</h3>
+
+---
+
+</br>
+
+<div align="center">
+  <img alt="Meltano Singer SDK Logo" src="https://user-images.githubusercontent.com/11428666/231584532-ffa694e6-60f9-4fd6-b2ee-5ff3e39d3ad6.svg" width="600"/>
+</div>
+
+</br>
+
+<div align="center">
+  <a href="https://pypi.org/project/singer-sdk">
+   <img alt="Python Versions" src="https://img.shields.io/pypi/pyversions/singer-sdk"/>
+  </a>
+  <a href="https://pypi.org/project/singer-sdk">
+   <img alt="Downloads" src="https://img.shields.io/pypi/dw/singer-sdk?color=blue"/>
+  </a>
+  <a href="https://pypi.org/project/singer-sdk">
+   <img alt="PyPI Version" src="https://img.shields.io/pypi/v/singer-sdk?color=blue"/>
+  </a>
+  <a href="https://sdk.meltano.com/en/latest/?badge=latest">
+   <img alt="Documentation Status" src="https://readthedocs.org/projects/meltano-sdk/badge/?version=latest"/>
+  </a>
+  <a href="https://codecov.io/gh/meltano/sdk">
+   <img alt="codecov" src="https://codecov.io/gh/meltano/sdk/branch/main/graph/badge.svg?token=kS1zkemAgo"/>
+  </a>
+  <a href="https://results.pre-commit.ci/latest/github/meltano/sdk/main">
+   <img alt="pre-commit.ci status" src="https://results.pre-commit.ci/badge/github/meltano/sdk/main.svg"/>
+  </a>
+</div>
+
+---
+
+## Future-proof extractors and loaders, with less code
+
+On average, developers tell us that they write about 70% less code by using the SDK, which
+makes learning the SDK a great investment. Furthermore, as new features and capabilities
+are added to the SDK, your taps and targets can always take advantage of the latest
+capabilities and bug fixes, simply by updating your SDK dependency to the latest version.
+
+## Meltano
+
+*Not familiar with Meltano?*  [Meltano](https://docs.meltano.com/getting-started/meltano-at-a-glance) is your CLI for ELT+ that:
+
+- **Starts simple**: Meltano is pip-installable and comes in a prepackaged docker container, you can have your first ELT pipeline running within minutes.
+- **Has DataOps out-of-the-box**: Meltano provides tools that make DataOps best practices easy to use in every project.
+- **Integrates with everything**: 300+ natively supported data sources & targets, as well as additional plugins like great expectations or dbt are natively available.
+- **Is easily customizable**: Meltano isn't just extensible, it's built to be extended! The Singer SDK (for Connectors) & EDK (for Meltano Components) are easy to use. Meltano Hub helps you find all of the connectors and components created across the data community.
+- **Is a mature system**: Developed since 2018, runs in production at large companies like GitLab, and currently powers over a million pipeline runs monthly.
+- **Has first class ELT tooling built-in**: Extract data from any data source, load into any target, use inline maps to transform on data on the fly, and test the incoming data, all in one package.
+
+If you want to get started with Meltano, we suggest you:
+- head over to the [Installation](https://docs.meltano.com/getting-started/installation)
+- or if you have it installed, go through the [Meltano Tutorial](https://docs.meltano.com/getting-started/part1).
+
+## Documentation
+
+- See our [online documentation](https://sdk.meltano.com) for instructions on how
+to get started with the SDK.
+
+## Contributing back to the SDK
+
+- For more information on how to contribute, see our [Contributors Guide](https://sdk.meltano.com/en/latest/CONTRIBUTING.html).
+
+## Making a new release of the SDK
+
+1. Trigger a version bump [using the GitHub web UI](https://github.com/edgarrmondragon/sdk/actions/workflows/version_bump.yml) or the cli:
+
+   ```console
+   $ gh workflow run
+   ```
+
+   The `increment: auto` option will figure out the most appropriate bump based on commit history.
+
+1. Follow the checklist in the PR description.
+
+1. Publish a new release [using the GitHub web UI](https://github.com/meltano/sdk/releases/new).
+

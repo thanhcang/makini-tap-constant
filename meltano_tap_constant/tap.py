@@ -1,8 +1,34 @@
 import json
 import os
-from singer_sdk import Tap
+from singer_sdk import Tap, Stream
 from singer_sdk import typing as th
 from singer_sdk.helpers._util import utc_now
+
+class ConstantStream(Stream):
+    """Stream class for constant data."""
+    name = "constant_stream"
+    schema = th.PropertiesList(
+        th.Property("name", th.StringType, required=True, description="Name of the entity"),
+        th.Property("data", th.ArrayType(
+            th.ObjectType(
+                th.Property("code", th.StringType),
+                th.Property("name", th.StringType)
+            )
+        ), required=True, description="List of data"),
+    ).to_dict()
+
+    def __init__(self, tap, constant_data):
+        super().__init__(tap)
+        self.constant_data = constant_data
+
+    def get_records(self, context=None):
+        """Yields records for the stream."""
+        for stream in self.constant_data:
+            record = {
+                "name": stream["name"],
+                "data": [{"code": status, "name": status} for status in stream["data"]]
+            }
+            yield record
 
 class TapRestConstant(Tap):
     """A tap to handle constant data."""
@@ -20,54 +46,12 @@ class TapRestConstant(Tap):
         },
     ]
 
-    # Define the stream schema
-    @property
-    def stream_schemas(self):
-        """Return stream schemas based on the properties."""
+    def discover_streams(self):
+        """Returns a list of streams that the tap can sync."""
         return [
-            th.Property(
-                "name", 
-                th.StringType, 
-                required=True, 
-                description="Name of the entity"
-            ),
-            th.Property(
-                "data", 
-                th.ArrayType(th.ObjectType({
-                    "code": th.StringType,
-                    "name": th.StringType
-                })), 
-                required=True, 
-                description="List of data"
-            ),
+            ConstantStream(self, self.constant_data)
         ]
 
-    def sync(self):
-        """Sync the streams and store constant data."""
-        for stream in self.constant_data:
-            # Log that we're processing this stream
-            self.logger.info(f"Syncing stream: {stream['name']}")
-            
-            # Creating record per stream
-            record = {
-                "name": stream["name"],
-                "data": [{"code": status, "name": status} for status in stream["data"]]
-            }
-
-            # Yield the record (this is the standard behavior for a tap)
-            yield {
-                "stream": stream["name"],
-                "record": record,
-                "version": utc_now(),
-                "time_extracted": utc_now(),
-            }
-
-    def load_data_from_env(self):
-        """Load stream data from the environment variable TAP_REST_API_CONSTANT_STREAMS."""
-        stream_data = os.getenv("TAP_REST_API_CONSTANT_STREAMS", "[]")
-        try:
-            self.logger.info("Loading stream data from environment variable.")
-            return json.loads(stream_data)
-        except json.JSONDecodeError as e:
-            self.logger.error(f"Failed to load stream data from environment. Error: {e}")
-            return self.constant_data
+if __name__ == "__main__":
+    tap = TapRestConstant()
+    tap.cli()  # Correct method call
