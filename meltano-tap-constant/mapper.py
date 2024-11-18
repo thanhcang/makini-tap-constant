@@ -9,8 +9,9 @@ class TapRestConstant(Mapper):
 
     name = "tap-rest-constant"
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self):
+        super().__init__()
+        self.logger.info("Loading constang mapper instance")
         self.stream_maps = self.load_data_from_env()
 
     # Define the stream schema for mapping
