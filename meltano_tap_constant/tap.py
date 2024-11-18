@@ -8,13 +8,13 @@ class ConstantStream(Stream):
     """Stream class for constant data."""
     name = "constant_stream"
     schema = th.PropertiesList(
-        th.Property("name", th.StringType, required=True, description="Name of the entity"),
+        th.Property("name", th.StringType, required=False, description="Name of the entity"),
         th.Property("data", th.ArrayType(
             th.ObjectType(
                 th.Property("code", th.StringType),
                 th.Property("name", th.StringType)
             )
-        ), required=True, description="List of data"),
+        ), required=False, description="List of data"),
     ).to_dict()
 
     def __init__(self, tap, constant_data):
