@@ -3,10 +3,8 @@ send_anonymous_usage_stats: true
 
 plugins:
   extractors:
-    - name: tap-constant
-      namespace: tap_constant
-      pip_url: git+https://github.com/thanhcang/meltano-tap-constant.git
-      executable: tap-constant
+    - name: meltano-tap-constant
+      namespace: meltano-tap-constant
       capabilities:
         - state
         - catalog
