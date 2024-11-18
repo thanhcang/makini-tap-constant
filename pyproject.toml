@@ -10,4 +10,4 @@ python = ">3.8"
 singer-sdk = { version = "^0.40.0", python = "<4" }
 
 [tool.poetry.scripts]
-meltano-tap-constant = "meltano-tap-constant:TapRestConstant.cli"
+tap-rest-constant = "meltano-tap-constant:TapRestConstant.cli"
