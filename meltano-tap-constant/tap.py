@@ -66,8 +66,8 @@ class TapRestConstant(Tap):
 
     # Helper method to load data from environment
     def load_data_from_env(self):
-        """Load stream data from the environment variable TAP_REST_API_MSDK_STREAMS."""
-        stream_data = os.getenv("TAP_REST_API_MSDK_STREAMS", "[]")
+        """Load stream data from the environment variable TAP_REST_API_CONSTANT_STREAMS."""
+        stream_data = os.getenv("TAP_REST_API_CONSTANT_STREAMS", "[]")
         try:
             # Load stream data from the environment variable
             self.logger.info("Loading stream data from environment variable.")
