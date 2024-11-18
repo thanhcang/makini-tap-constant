@@ -9,23 +9,18 @@ class ConstantStream(Stream):
     name = "constant_stream"
     schema = th.PropertiesList(
         th.Property("name", th.StringType, required=False, description="Name of the entity"),
-        th.Property("data", th.ArrayType(
-            th.ObjectType(
-                th.Property("code", th.StringType),
-                th.Property("name", th.StringType)
-            )
-        ), required=False, description="List of data"),
+        th.Property("code", th.StringType, required=False, description="Code of the entity"),
     ).to_dict()
 
     def __init__(self, tap, constant_data):
         super().__init__(tap)
         self.constant_data = constant_data
-        self.logger = tap.logger 
+        self.logger = tap.logger
 
     def get_records(self, context=None):
         """Yields records for the stream."""
         for stream in self.constant_data:
-            collection_name = stream["name"]  # Use the 'name' field as the collection name
+            collection_name = stream["name"]
             for status in stream["data"]:
                 # Create a record for each entry in the 'data' array
                 record = {
@@ -56,6 +51,6 @@ class TapConstant(Tap):
         return [
             ConstantStream(self, self.constant_data)
         ]
-    
+
 if __name__ == "__main__":
-    TapConstant.cli()    
+    TapConstant.cli()
