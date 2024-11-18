@@ -25,12 +25,15 @@ class ConstantStream(Stream):
     def get_records(self, context=None):
         """Yields records for the stream."""
         for stream in self.constant_data:
-            record = {
-                "name": stream["name"],
-                "data": [{"code": status, "name": status} for status in stream["data"]]
-            }
-            self.logger.info(f"Tap makini constant: {record}")
-            yield record
+            collection_name = stream["name"]  # Use the 'name' field as the collection name
+            for status in stream["data"]:
+                # Create a record for each entry in the 'data' array
+                record = {
+                    "name": status,
+                    "code": status
+                }
+                self.logger.info(f"Yielding record for {collection_name}: {record}")
+                yield record
 
 class TapConstant(Tap):
     """A tap to handle constant data."""
