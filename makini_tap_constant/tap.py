@@ -1,4 +1,4 @@
-=import json
+import json
 import os
 import hashlib
 from singer_sdk import Tap, Stream
